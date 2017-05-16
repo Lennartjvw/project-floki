@@ -11,28 +11,35 @@ var GameObject = (function () {
 }());
 var Character = (function (_super) {
     __extends(Character, _super);
-    function Character(x, y, left, right) {
+    function Character(x, y, left, right, space) {
         _super.call(this, "Character");
         this.leftSpeed = 0;
         this.rightSpeed = 0;
+        this.goingDown = false;
+        this.jumpLimit = 700;
         var container = document.getElementById("container");
         this.div = document.createElement("character");
         container.appendChild(this.div);
         this.x = x;
         this.y = y;
+        this.jump_y = this.y;
         this.leftkey = left;
         this.rightkey = right;
+        this.spacebar = space;
         window.addEventListener("keydown", this.onKeyDown.bind(this));
         window.addEventListener("keyup", this.onKeyUp.bind(this));
     }
     Character.prototype.onKeyDown = function (event) {
         if (event.keyCode == 65) {
-            this.leftSpeed = 10;
+            this.leftSpeed = 5;
             console.log("A was pressed (left)");
         }
         else if (event.keyCode == 68) {
-            this.rightSpeed = 10;
+            this.rightSpeed = 5;
             console.log("D was pressed (right)");
+        }
+        else if (event.keyCode == 32) {
+            this.jumping = setInterval(this.jump.bind(this), 10);
         }
     };
     Character.prototype.onKeyUp = function (event) {
@@ -47,13 +54,27 @@ var Character = (function (_super) {
         this.x = this.x - this.leftSpeed + this.rightSpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
+    Character.prototype.jump = function () {
+        if (this.y > this.jumpLimit && !this.goingDown) {
+            this.y -= 10;
+            console.log("Jumping: " + this.y);
+        }
+        else {
+            this.goingDown = true;
+            this.y += 10;
+            if (this.y == this.jump_y) {
+                clearInterval(this.jumping);
+                this.goingDown = false;
+            }
+        }
+    };
     return Character;
 }(GameObject));
 var Game = (function () {
     function Game() {
         var _this = this;
         console.log("The game has started!");
-        this.character = new Character(0, 750, 65, 68);
+        this.character = new Character(0, 750, 65, 68, 32);
         var container = document.getElementById("container");
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }

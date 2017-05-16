@@ -4,7 +4,7 @@ class Game {
     
     constructor() {
         console.log("The game has started!");
-        this.character = new Character(0, 750, 65, 68);
+        this.character = new Character(0, 750, 65, 68, 32);
 
         let container:HTMLElement = document.getElementById("container");
 

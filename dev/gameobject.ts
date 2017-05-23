@@ -8,7 +8,10 @@ class GameObject {
     protected div: HTMLElement;
 
     constructor(object:String){
-        console.log("This object has been created:" + object)
+        console.log("This object has been created: " + object);
     }
 
+    public getPositionX(): number { 
+        return this.x; 
+    }
 }

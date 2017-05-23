@@ -28,8 +28,20 @@ p {
 }
 
 character {
+    width: 75px;
+    height: 200px;
+    background-image: url(../images/floki.png);
+}
+
+axe {
     width: 50px;
     height: 50px;
-    background-color: red;
+    background-image: url(../images/axe.png);
+}
+
+archer {
+    width: 100px;
+    height: 200px;
+    background-image: url(../images/archer.png);
 }
 

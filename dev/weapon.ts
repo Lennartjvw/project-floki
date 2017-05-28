@@ -1,10 +1,6 @@
 /// <reference path="gameobject.ts" />
 
 class Weapon extends GameObject {
-
-    public width = 50;
-    public height = 50;
-
     protected whatWeapon: string;
 
     private weaponSpeed: number;
@@ -13,8 +9,8 @@ class Weapon extends GameObject {
 
     public lastKey: number;
 
-    constructor(whatWeapon: string){
-        super("weapon");
+    constructor(whatWeapon: string, x: number, y: number, width: number, height: number) {
+        super("weapon", x, y, width, height);
         console.log("And the weapon is an: " + this.whatWeapon);
         this.whatWeapon = whatWeapon;
         this.lastKey = Character.getLastKey();

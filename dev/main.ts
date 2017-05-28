@@ -2,9 +2,9 @@
 
 class Game {
 
-    private character:Character;
-    private archer:Archer;
-    private background:Background;
+    private character: Character;
+    private archer: Archer;
+    private background: Background;
 
     private axe: Axe;
 
@@ -24,14 +24,14 @@ class Game {
         this.axeArray.push(axe);
     }
 
-    private gameLoop(){
+    private gameLoop() {
         this.character.draw();
         this.character.update();
 
         // this.background.movingBackground(this.character.getX);
 
         for (const axe of this.axeArray) {
-            axe.draw(Character.getLastKey(), this.character.getPositionX());
+            axe.draw(Character.getLastKey(), this.character.getX());
         }
     
         requestAnimationFrame(() => this.gameLoop());

@@ -3,13 +3,7 @@
 
 
 class Bow extends Weapon {
-
-    constructor(x: number, y:number){
-        super("bow");
-
-        this.x = x;
-        this.y = y;
+    constructor(x: number, y: number, width: number, height: number) {
+        super("bow", x, y, width, height);
     }
-
-
 }

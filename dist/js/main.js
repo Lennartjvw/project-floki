@@ -14,20 +14,28 @@ var Background = (function () {
     return Background;
 }());
 var GameObject = (function () {
-    function GameObject(object) {
+    function GameObject(object, x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
         console.log("This object has been created: " + object);
     }
-    GameObject.prototype.getPositionX = function () {
+    GameObject.prototype.getX = function () {
         return this.x;
+    };
+    GameObject.prototype.getY = function () {
+        return this.y;
+    };
+    GameObject.prototype.setY = function (y) {
+        this.y = y;
     };
     return GameObject;
 }());
 var Weapon = (function (_super) {
     __extends(Weapon, _super);
-    function Weapon(whatWeapon) {
-        _super.call(this, "weapon");
-        this.width = 50;
-        this.height = 50;
+    function Weapon(whatWeapon, x, y, width, height) {
+        _super.call(this, "weapon", x, y, width, height);
         console.log("And the weapon is an: " + this.whatWeapon);
         this.whatWeapon = whatWeapon;
         this.lastKey = Character.getLastKey();
@@ -55,13 +63,11 @@ var Weapon = (function (_super) {
 }(GameObject));
 var Axe = (function (_super) {
     __extends(Axe, _super);
-    function Axe(x, y) {
-        _super.call(this, "axe");
+    function Axe(x, y, width, height) {
+        _super.call(this, "axe", x, y, width, height);
         var container = document.getElementById("container");
         this.div = document.createElement("axe");
         container.appendChild(this.div);
-        this.x = x;
-        this.y = y;
     }
     return Axe;
 }(Weapon));
@@ -84,7 +90,7 @@ var Game = (function () {
         this.character.update();
         for (var _i = 0, _a = this.axeArray; _i < _a.length; _i++) {
             var axe = _a[_i];
-            axe.draw(Character.getLastKey(), this.character.getPositionX());
+            axe.draw(Character.getLastKey(), this.character.getX());
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
@@ -96,19 +102,14 @@ window.addEventListener("load", function () {
 var Character = (function (_super) {
     __extends(Character, _super);
     function Character(x, y, left, right, space, game) {
-        _super.call(this, "Character");
-        this.width = 75;
-        this.height = 200;
+        _super.call(this, "Character", x, y, 75, 200);
         this.direction = 1;
         this.leftSpeed = 0;
         this.rightSpeed = 0;
-        this.axes = new Array();
         this.axeArray = [];
         var container = document.getElementById("container");
         this.div = document.createElement("character");
         container.appendChild(this.div);
-        this.x = x;
-        this.y = y;
         this.leftkey = left;
         this.rightkey = right;
         this.spacebar = space;
@@ -117,15 +118,6 @@ var Character = (function (_super) {
         window.addEventListener("keydown", this.onKeyDown.bind(this));
         window.addEventListener("keyup", this.onKeyUp.bind(this));
     }
-    Character.prototype.getX = function () {
-        return this.x;
-    };
-    Character.prototype.getY = function () {
-        return this.y;
-    };
-    Character.prototype.setY = function (y) {
-        this.y = y;
-    };
     Character.prototype.update = function () {
         this.behaviour.performBehaviour();
     };
@@ -167,7 +159,7 @@ var Character = (function (_super) {
     };
     Character.prototype.attack = function () {
         console.log("K was pressed (attack)");
-        this.game.addAxe(new Axe(this.x, this.y + 55));
+        this.game.addAxe(new Axe(this.x, this.y + 55, 50, 50));
         console.log("There are " + this.axeArray.length + " axes in the array");
     };
     Character.lastKey = 0;
@@ -175,10 +167,8 @@ var Character = (function (_super) {
 }(GameObject));
 var Enemy = (function (_super) {
     __extends(Enemy, _super);
-    function Enemy(whatEnemy) {
-        _super.call(this, "enemy");
-        this.width = 100;
-        this.height = 200;
+    function Enemy(whatEnemy, x, y) {
+        _super.call(this, "enemy", x, y, 100, 200);
         console.log("And the enemy is an: " + whatEnemy);
         var container = document.getElementById("container");
         this.div = document.createElement(whatEnemy);
@@ -187,19 +177,16 @@ var Enemy = (function (_super) {
     Enemy.prototype.draw = function () {
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
-    Enemy.prototype.getX = function () {
-        return this.x;
-    };
-    Enemy.prototype.getY = function () {
-        return this.y;
-    };
     return Enemy;
 }(GameObject));
 var Utils = (function () {
     function Utils() {
     }
     Utils.prototype.hasOverlap = function (c1, c2) {
-        return !(c2.getX() > c1.getX() + c1.width || c2.getX() + c2.width < c1.getX() || c2.getY() > c1.getY() + c1.height || c2.getY() + c2.height < c1.getY());
+        return !(c2.getX() > c1.getX() + c1.width ||
+            c2.getX() + c2.width < c1.getX() ||
+            c2.getY() > c1.getY() + c1.height ||
+            c2.getY() + c2.height < c1.getY());
     };
     return Utils;
 }());
@@ -249,18 +236,14 @@ var startJumping = (function () {
 var Archer = (function (_super) {
     __extends(Archer, _super);
     function Archer(x, y) {
-        _super.call(this, "archer");
-        this.x = x;
-        this.y = y;
+        _super.call(this, "archer", x, y);
     }
     return Archer;
 }(Enemy));
 var Bow = (function (_super) {
     __extends(Bow, _super);
-    function Bow(x, y) {
-        _super.call(this, "bow");
-        this.x = x;
-        this.y = y;
+    function Bow(x, y, width, height) {
+        _super.call(this, "bow", x, y, width, height);
     }
     return Bow;
 }(Weapon));

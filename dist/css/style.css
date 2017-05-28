@@ -13,7 +13,8 @@ body * {
 }
 
 container {
-    background-color: blue;
+
+    background-image: url(../images/bakground_game-01.png);
     width:1200px; height:800px;
     left: 50%; top: 50%;
     transform: translate(-50%, -50%);

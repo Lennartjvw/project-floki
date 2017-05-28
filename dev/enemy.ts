@@ -5,6 +5,8 @@ class Enemy extends GameObject {
 
     protected whatEnemy: string;
 
+    private character: Character;
+
     constructor(whatEnemy: string){
         super("enemy");
         console.log("And the enemy is an: " + whatEnemy);
@@ -16,9 +18,7 @@ class Enemy extends GameObject {
     }
 
     public draw() {
-
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
-
     }
 
     public getX(){

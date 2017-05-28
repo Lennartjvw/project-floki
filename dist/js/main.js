@@ -3,6 +3,16 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var Background = (function () {
+    function Background() {
+        var container = document.getElementById("container");
+        this.background = document.createElement("container");
+        this.background.style.backgroundImage = "url(images/bakground_game-01.png)";
+        container.appendChild(this.background);
+        this.background.style.backgroundSize = "1200px 800px";
+    }
+    return Background;
+}());
 var GameObject = (function () {
     function GameObject(object) {
         console.log("This object has been created: " + object);
@@ -25,12 +35,12 @@ var Weapon = (function (_super) {
     Weapon.prototype.draw = function (lastKey, x) {
         this.startPositionX = x;
         if (this.lastKey == 0) {
-            this.weaponSpeed = 10;
+            this.weaponSpeed = 25;
             this.weaponDirection = 1;
         }
         if (this.lastKey == 1) {
             this.weaponDirection = -1;
-            this.weaponSpeed = -10;
+            this.weaponSpeed = -25;
         }
         this.x += this.weaponSpeed;
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) scaleX(" + this.weaponDirection + ")";
@@ -60,8 +70,8 @@ var Game = (function () {
         var _this = this;
         this.axeArray = [];
         console.log("The game has started!");
+        this.background = new Background();
         this.character = new Character(0, 600, 65, 68, 32, this);
-        this.archer = new Archer(1100, 600);
         var container = document.getElementById("container");
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
@@ -72,7 +82,6 @@ var Game = (function () {
         var _this = this;
         this.character.draw();
         this.character.update();
-        this.archer.draw();
         for (var _i = 0, _a = this.axeArray; _i < _a.length; _i++) {
             var axe = _a[_i];
             axe.draw(Character.getLastKey(), this.character.getPositionX());
@@ -123,13 +132,13 @@ var Character = (function (_super) {
     Character.getLastKey = function () { return Character.lastKey; };
     Character.prototype.onKeyDown = function (event) {
         if (event.keyCode == 65) {
-            this.leftSpeed = 5;
+            this.leftSpeed = 7;
             console.log("A was pressed (left)");
             Character.lastKey = 1;
             this.direction = -1;
         }
         else if (event.keyCode == 68) {
-            this.rightSpeed = 5;
+            this.rightSpeed = 7;
             console.log("D was pressed (right)");
             Character.lastKey = 0;
             this.direction = 1;

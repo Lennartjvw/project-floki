@@ -26,12 +26,12 @@ class Weapon extends GameObject {
 
 
         if (this.lastKey == 0) {
-            this.weaponSpeed = 10;
+            this.weaponSpeed = 25;
             this.weaponDirection = 1;
         }
         if (this.lastKey == 1) {
             this.weaponDirection = -1;
-            this.weaponSpeed = -10;
+            this.weaponSpeed = -25;
 
         }
 

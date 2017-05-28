@@ -71,13 +71,13 @@ class Character extends GameObject {
 
     private onKeyDown(event: KeyboardEvent){
         if(event.keyCode == 65) {
-            this.leftSpeed = 5;
+            this.leftSpeed = 7;
             console.log("A was pressed (left)");
             Character.lastKey = 1;
             this.direction = -1;
         }
         else if(event.keyCode == 68) {
-            this.rightSpeed = 5;
+            this.rightSpeed = 7;
             console.log("D was pressed (right)");
             Character.lastKey = 0;
             this.direction = 1;

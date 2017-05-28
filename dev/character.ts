@@ -8,9 +8,6 @@ class Character extends GameObject {
 
     public behaviour: Behaviour;
 
-    public width = 75;
-    public height = 200;
-
     private leftkey: number;
     private rightkey: number;
     private spacebar: number;
@@ -23,21 +20,16 @@ class Character extends GameObject {
     
     private game: Game;
 
-    public axes: Array<Axe> = new Array<Axe>();
-    public axeArray = [];
-    public axe:Axe;
-
+    public axeArray: Axe[] = [];
+    public axe: Axe;
 
     constructor(x: number, y: number, left: number, right: number, space: number, game: Game){
-        super("Character");
+        super("Character", x, y, 75, 200);
 
         let container:HTMLElement = document.getElementById("container");
 
         this.div = document.createElement("character");
         container.appendChild(this.div);
-
-        this.x = x;
-        this.y = y;
 
         this.leftkey = left;
         this.rightkey = right;
@@ -49,18 +41,6 @@ class Character extends GameObject {
 
         window.addEventListener("keydown", this.onKeyDown.bind(this));
         window.addEventListener("keyup", this.onKeyUp.bind(this));
-    }
-
-    public getX() {
-        return this.x;
-    }
-
-    public getY(){
-        return this.y;
-    }
-
-    public setY(y: number): void {
-        this.y = y;
     }
 
     public update(){
@@ -110,7 +90,7 @@ class Character extends GameObject {
 
     public attack(){
         console.log("K was pressed (attack)");
-        this.game.addAxe(new Axe(this.x, this.y + 55));
+        this.game.addAxe(new Axe(this.x, this.y + 55, 50, 50));
         console.log("There are " + this.axeArray.length + " axes in the array");
     }
 

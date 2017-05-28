@@ -5,10 +5,7 @@ class startJumping implements Behaviour {
     private jump_y: number;
     private goingDown: boolean = false;
     private jumpLimit: number = 550;
-    private jump;
-
-    private charX: number;
-    private charY: number;
+    private isJumping: boolean;
 
     private timer: number;
 
@@ -18,7 +15,7 @@ class startJumping implements Behaviour {
 
         this.character = c;
         this.jump_y = this.character.getY();
-
+        this.isJumping = false;
     }
 
     performBehaviour(){
@@ -28,23 +25,26 @@ class startJumping implements Behaviour {
         console.log("jump");
         let y = this.character.getY();
 
-        this.timer = setInterval(() => {
-            
-            if(y > this.jumpLimit && !this.goingDown){
-                y -= 10;
-                this.character.setY(y);
-            }
-            else {
-                this.goingDown = true;
-                y += 10;
-                this.character.setY(y);
-                if(y == this.jump_y){
-                    clearInterval(this.timer)
-                    this.goingDown = false;
-                    } 
+        if (!this.isJumping) {
+          this.isJumping = true;
+          
+          this.timer = setInterval(() => {
+
+            if (y > this.jumpLimit && !this.goingDown) {
+              y -= 10;
+              this.character.setY(y);
+            } else {
+              this.goingDown = true;
+              y += 10;
+              this.character.setY(y);
+              if (y == this.jump_y) {
+                clearInterval(this.timer)
+                this.goingDown = false;
+                this.isJumping = false;
+              }
             }
 
-        }, 25)
-        
+          }, 25)
+        }
     }
 }

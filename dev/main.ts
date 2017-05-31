@@ -37,6 +37,7 @@ class Game {
 
         if (this.utils.hasOverlap(this.character, this.firstBoss)){
             console.log("hit!");
+            this.character.hit(this.firstBoss.getDamage());
         }
         else {
             console.log("no hit!");

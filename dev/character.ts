@@ -23,6 +23,8 @@ class Character extends GameObject {
     public axeArray: Axe[] = [];
     public axe: Axe;
 
+    private health = 100;
+
     constructor(x: number, y: number, left: number, right: number, space: number, game: Game){
         super("Character", x, y, 75, 200);
 
@@ -92,6 +94,11 @@ class Character extends GameObject {
         console.log("K was pressed (attack)");
         this.game.addAxe(new Axe(this.x, this.y + 55, 50, 50));
         console.log("There are " + this.axeArray.length + " axes in the array");
+    }
+
+    public hit(dmgValue){
+        this.health -= dmgValue;
+        console.log("Your HP is: " + this.health);
     }
 
 }

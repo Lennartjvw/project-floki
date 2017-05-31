@@ -82,6 +82,7 @@ var Game = (function () {
         this.firstBoss.draw();
         if (this.utils.hasOverlap(this.character, this.firstBoss)) {
             console.log("hit!");
+            this.character.hit(this.firstBoss.getDamage());
         }
         else {
             console.log("no hit!");
@@ -115,6 +116,7 @@ var Character = (function (_super) {
         this.leftSpeed = 0;
         this.rightSpeed = 0;
         this.axeArray = [];
+        this.health = 100;
         var container = document.getElementById("container");
         this.div = document.createElement("character");
         container.appendChild(this.div);
@@ -169,6 +171,10 @@ var Character = (function (_super) {
         console.log("K was pressed (attack)");
         this.game.addAxe(new Axe(this.x, this.y + 55, 50, 50));
         console.log("There are " + this.axeArray.length + " axes in the array");
+    };
+    Character.prototype.hit = function (dmgValue) {
+        this.health -= dmgValue;
+        console.log("Your HP is: " + this.health);
     };
     Character.lastKey = 0;
     return Character;
@@ -253,7 +259,11 @@ var FirstBoss = (function (_super) {
     __extends(FirstBoss, _super);
     function FirstBoss(x, y, width, height) {
         _super.call(this, "FirstBoss", x, y, width, height);
+        this.damage = 5;
     }
+    FirstBoss.prototype.getDamage = function () {
+        return this.damage;
+    };
     return FirstBoss;
 }(Enemy));
 var Bow = (function (_super) {

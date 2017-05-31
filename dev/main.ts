@@ -6,11 +6,16 @@ class Game {
 
     private axe: Axe;
 
+    private firstBoss: FirstBoss;
+
     private axeArray: Array<Axe> = [];
     
     constructor() {
         console.log("The game has started!");
         this.character = new Character(0, 600, 65, 68, 32, this);
+
+        this.firstBoss = new FirstBoss(500,500);
+
 
         let container:HTMLElement = document.getElementById("container");
 

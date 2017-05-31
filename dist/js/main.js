@@ -67,6 +67,7 @@ var Game = (function () {
         this.axeArray = [];
         console.log("The game has started!");
         this.character = new Character(0, 600, 65, 68, 32, this);
+        this.firstBoss = new FirstBoss(500, 500);
         var container = document.getElementById("container");
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
@@ -227,6 +228,13 @@ var startJumping = (function () {
     };
     return startJumping;
 }());
+var FirstBoss = (function (_super) {
+    __extends(FirstBoss, _super);
+    function FirstBoss(x, y) {
+        _super.call(this, "FirstBoss", x, y);
+    }
+    return FirstBoss;
+}(Enemy));
 var Bow = (function (_super) {
     __extends(Bow, _super);
     function Bow(x, y, width, height) {

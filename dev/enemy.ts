@@ -18,4 +18,8 @@ class Enemy extends GameObject {
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     }
 
+    public hit(){
+        this.div.remove();
+    }
+
 }

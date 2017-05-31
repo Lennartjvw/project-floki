@@ -40,7 +40,17 @@ class Game {
         }
         else {
             console.log("no hit!");
+        }
+
+        for(var axe of this.axeArray){
             
+            if(this.utils.hasOverlap(axe, this.firstBoss)){
+                console.log("axe hit!");
+                this.firstBoss.hit();
+            }
+            else {
+                console.log("no axe hit!");
+            }
         }
 
         for (const axe of this.axeArray) {

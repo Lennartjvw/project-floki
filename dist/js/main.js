@@ -88,7 +88,17 @@ var Game = (function () {
         }
         for (var _i = 0, _a = this.axeArray; _i < _a.length; _i++) {
             var axe = _a[_i];
-            axe.draw(Character.getLastKey(), this.character.getX());
+            if (this.utils.hasOverlap(axe, this.firstBoss)) {
+                console.log("axe hit!");
+                this.firstBoss.hit();
+            }
+            else {
+                console.log("no axe hit!");
+            }
+        }
+        for (var _b = 0, _c = this.axeArray; _b < _c.length; _b++) {
+            var axe_1 = _c[_b];
+            axe_1.draw(Character.getLastKey(), this.character.getX());
         }
         requestAnimationFrame(function () { return _this.gameLoop(); });
     };
@@ -174,6 +184,9 @@ var Enemy = (function (_super) {
     }
     Enemy.prototype.draw = function () {
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+    };
+    Enemy.prototype.hit = function () {
+        this.div.remove();
     };
     return Enemy;
 }(GameObject));

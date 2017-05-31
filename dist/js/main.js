@@ -227,13 +227,6 @@ var startJumping = (function () {
     };
     return startJumping;
 }());
-var Archer = (function (_super) {
-    __extends(Archer, _super);
-    function Archer(x, y) {
-        _super.call(this, "archer", x, y);
-    }
-    return Archer;
-}(Enemy));
 var Bow = (function (_super) {
     __extends(Bow, _super);
     function Bow(x, y, width, height) {

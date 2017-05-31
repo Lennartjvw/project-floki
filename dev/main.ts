@@ -3,7 +3,6 @@
 class Game {
 
     private character: Character;
-    private archer: Archer;
 
     private axe: Axe;
 
@@ -17,7 +16,7 @@ class Game {
 
         requestAnimationFrame(() => this.gameLoop());
     }
-    
+
     public addAxe(axe: Axe) {
         this.axeArray.push(axe);
     }

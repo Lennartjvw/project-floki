@@ -3,16 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-var Background = (function () {
-    function Background() {
-        var container = document.getElementById("container");
-        this.background = document.createElement("container");
-        this.background.style.backgroundImage = "url(images/bakground_game-01.png)";
-        container.appendChild(this.background);
-        this.background.style.backgroundSize = "1200px 800px";
-    }
-    return Background;
-}());
 var GameObject = (function () {
     function GameObject(object, x, y, width, height) {
         this.x = x;
@@ -76,7 +66,6 @@ var Game = (function () {
         var _this = this;
         this.axeArray = [];
         console.log("The game has started!");
-        this.background = new Background();
         this.character = new Character(0, 600, 65, 68, 32, this);
         var container = document.getElementById("container");
         requestAnimationFrame(function () { return _this.gameLoop(); });
@@ -208,6 +197,7 @@ var startJumping = (function () {
         console.log("Behaviour Jump!");
         this.character = c;
         this.jump_y = this.character.getY();
+        this.isJumping = false;
     }
     startJumping.prototype.performBehaviour = function () {
     };
@@ -215,21 +205,25 @@ var startJumping = (function () {
         var _this = this;
         console.log("jump");
         var y = this.character.getY();
-        this.timer = setInterval(function () {
-            if (y > _this.jumpLimit && !_this.goingDown) {
-                y -= 10;
-                _this.character.setY(y);
-            }
-            else {
-                _this.goingDown = true;
-                y += 10;
-                _this.character.setY(y);
-                if (y == _this.jump_y) {
-                    clearInterval(_this.timer);
-                    _this.goingDown = false;
+        if (!this.isJumping) {
+            this.isJumping = true;
+            this.timer = setInterval(function () {
+                if (y > _this.jumpLimit && !_this.goingDown) {
+                    y -= 10;
+                    _this.character.setY(y);
                 }
-            }
-        }, 25);
+                else {
+                    _this.goingDown = true;
+                    y += 10;
+                    _this.character.setY(y);
+                    if (y == _this.jump_y) {
+                        clearInterval(_this.timer);
+                        _this.goingDown = false;
+                        _this.isJumping = false;
+                    }
+                }
+            }, 25);
+        }
     };
     return startJumping;
 }());

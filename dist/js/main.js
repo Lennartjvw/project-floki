@@ -67,7 +67,8 @@ var Game = (function () {
         this.axeArray = [];
         console.log("The game has started!");
         this.character = new Character(0, 600, 65, 68, 32, this);
-        this.firstBoss = new FirstBoss(500, 500);
+        this.firstBoss = new FirstBoss(600, 400, 500, 600);
+        this.utils = new Utils();
         var container = document.getElementById("container");
         requestAnimationFrame(function () { return _this.gameLoop(); });
     }
@@ -78,6 +79,13 @@ var Game = (function () {
         var _this = this;
         this.character.draw();
         this.character.update();
+        this.firstBoss.draw();
+        if (this.utils.hasOverlap(this.character, this.firstBoss)) {
+            console.log("hit!");
+        }
+        else {
+            console.log("no hit!");
+        }
         for (var _i = 0, _a = this.axeArray; _i < _a.length; _i++) {
             var axe = _a[_i];
             axe.draw(Character.getLastKey(), this.character.getX());
@@ -157,8 +165,8 @@ var Character = (function (_super) {
 }(GameObject));
 var Enemy = (function (_super) {
     __extends(Enemy, _super);
-    function Enemy(whatEnemy, x, y) {
-        _super.call(this, "enemy", x, y, 100, 200);
+    function Enemy(whatEnemy, x, y, width, height) {
+        _super.call(this, "enemy", x, y, width, height);
         console.log("And the enemy is an: " + whatEnemy);
         var container = document.getElementById("container");
         this.div = document.createElement(whatEnemy);
@@ -230,8 +238,8 @@ var startJumping = (function () {
 }());
 var FirstBoss = (function (_super) {
     __extends(FirstBoss, _super);
-    function FirstBoss(x, y) {
-        _super.call(this, "FirstBoss", x, y);
+    function FirstBoss(x, y, width, height) {
+        _super.call(this, "FirstBoss", x, y, width, height);
     }
     return FirstBoss;
 }(Enemy));

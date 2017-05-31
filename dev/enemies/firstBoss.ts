@@ -3,8 +3,8 @@
 
 class FirstBoss extends Enemy {
 
-    constructor(x:number, y:number){
-        super("FirstBoss", x, y);
+    constructor(x:number, y:number, width:number, height: number){
+        super("FirstBoss", x, y, width, height);
     }
 
 }

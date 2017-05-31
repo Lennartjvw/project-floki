@@ -4,8 +4,8 @@ class Enemy extends GameObject {
 
     private character: Character;
 
-    constructor(whatEnemy: string, x: number, y: number) {
-        super("enemy", x, y, 100, 200);
+    constructor(whatEnemy: string, x: number, y: number, width: number, height: number) {
+        super("enemy", x, y, width, height);
         console.log("And the enemy is an: " + whatEnemy);
 
         let container:HTMLElement = document.getElementById("container");

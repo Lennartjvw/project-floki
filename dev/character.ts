@@ -24,6 +24,7 @@ class Character extends GameObject {
     public axe: Axe;
 
     private health = 100;
+    private damage = 5;
 
     constructor(x: number, y: number, left: number, right: number, space: number, game: Game){
         super("Character", x, y, 75, 200);
@@ -97,8 +98,25 @@ class Character extends GameObject {
     }
 
     public hit(dmgValue){
-        this.health -= dmgValue;
-        console.log("Your HP is: " + this.health);
+        if (this.health <= 0){
+            this.dead();
+        }
+        else {
+            this.health -= dmgValue;
+            console.log("Your HP is: " + this.health);
+        }
+    }
+
+    public getHealth() {
+        return this.health;
+    }
+
+    public getDamage() {
+        return this.damage;
+    }
+
+    public dead() {
+        console.log("First boss died!");
     }
 
 }

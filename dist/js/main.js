@@ -83,6 +83,7 @@ var Game = (function () {
         if (this.utils.hasOverlap(this.character, this.firstBoss)) {
             console.log("hit!");
             this.character.hit(this.firstBoss.getDamage());
+            this.firstBoss.hit(this.character.getDamage());
         }
         else {
             console.log("no hit!");
@@ -91,7 +92,7 @@ var Game = (function () {
             var axe = _a[_i];
             if (this.utils.hasOverlap(axe, this.firstBoss)) {
                 console.log("axe hit!");
-                this.firstBoss.hit();
+                this.firstBoss.hit(this.character.getDamage());
             }
             else {
                 console.log("no axe hit!");
@@ -117,6 +118,7 @@ var Character = (function (_super) {
         this.rightSpeed = 0;
         this.axeArray = [];
         this.health = 100;
+        this.damage = 5;
         var container = document.getElementById("container");
         this.div = document.createElement("character");
         container.appendChild(this.div);
@@ -173,8 +175,22 @@ var Character = (function (_super) {
         console.log("There are " + this.axeArray.length + " axes in the array");
     };
     Character.prototype.hit = function (dmgValue) {
-        this.health -= dmgValue;
-        console.log("Your HP is: " + this.health);
+        if (this.health <= 0) {
+            this.dead();
+        }
+        else {
+            this.health -= dmgValue;
+            console.log("Your HP is: " + this.health);
+        }
+    };
+    Character.prototype.getHealth = function () {
+        return this.health;
+    };
+    Character.prototype.getDamage = function () {
+        return this.damage;
+    };
+    Character.prototype.dead = function () {
+        console.log("First boss died!");
     };
     Character.lastKey = 0;
     return Character;
@@ -191,8 +207,23 @@ var Enemy = (function (_super) {
     Enemy.prototype.draw = function () {
         this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
     };
-    Enemy.prototype.hit = function () {
-        this.div.remove();
+    Enemy.prototype.hit = function (dmgValue) {
+        if (this.health <= 0) {
+            this.dead();
+        }
+        else {
+            this.health -= dmgValue;
+            console.log("Your HP is: " + this.health);
+        }
+    };
+    Enemy.prototype.getDamage = function () {
+        return this.damage;
+    };
+    Enemy.prototype.getHealth = function () {
+        return this.health;
+    };
+    Enemy.prototype.dead = function () {
+        console.log("first boss died!");
     };
     return Enemy;
 }(GameObject));
@@ -206,6 +237,12 @@ var Utils = (function () {
             c2.getY() + c2.height < c1.getY());
     };
     return Utils;
+}());
+var Ui = (function () {
+    function Ui() {
+        this.healthbarChar = new Healthbar(200, 200);
+    }
+    return Ui;
 }());
 var Idle = (function () {
     function Idle(c) {
@@ -259,11 +296,9 @@ var FirstBoss = (function (_super) {
     __extends(FirstBoss, _super);
     function FirstBoss(x, y, width, height) {
         _super.call(this, "FirstBoss", x, y, width, height);
+        this.health = 500;
         this.damage = 5;
     }
-    FirstBoss.prototype.getDamage = function () {
-        return this.damage;
-    };
     return FirstBoss;
 }(Enemy));
 var Bow = (function (_super) {

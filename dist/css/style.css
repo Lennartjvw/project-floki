@@ -48,3 +48,16 @@ firstBoss {
     background-image: url(../images/1boss.png);
 }
 
+hpback {
+    width: 400px;
+    height: 50px;
+    background-color: grey;
+}
+
+hpfront {
+    width: 400px;
+    height: 50px;
+    background-color: red;
+}
+
+

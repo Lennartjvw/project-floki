@@ -1,5 +1,4 @@
 /// <reference path="weapons/axe.ts" />
-
 class Game {
 
     private character: Character;
@@ -11,6 +10,7 @@ class Game {
     private utils: Utils;
 
     private axeArray: Array<Axe> = [];
+
     
     constructor() {
         console.log("The game has started!");
@@ -18,7 +18,6 @@ class Game {
         this.firstBoss = new FirstBoss(600,400, 500, 600);
 
         this.utils = new Utils();
-
 
         let container:HTMLElement = document.getElementById("container");
 
@@ -35,9 +34,13 @@ class Game {
 
         this.firstBoss.draw();
 
+        // console.log("character levens: "+this.character.getHealth);
+        // console.log("first boss levens: "+this.character.getHealth);
+
         if (this.utils.hasOverlap(this.character, this.firstBoss)){
             console.log("hit!");
             this.character.hit(this.firstBoss.getDamage());
+            this.firstBoss.hit(this.character.getDamage());
         }
         else {
             console.log("no hit!");
@@ -47,7 +50,7 @@ class Game {
             
             if(this.utils.hasOverlap(axe, this.firstBoss)){
                 console.log("axe hit!");
-                this.firstBoss.hit();
+                this.firstBoss.hit(this.character.getDamage());
             }
             else {
                 console.log("no axe hit!");
